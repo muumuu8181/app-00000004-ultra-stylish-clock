@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕐 Ultra Stylish Clock System v1.0</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-container" class="app-container">
+        <!-- Header with Theme Selector -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="brand-title">
+                    <span class="title-icon">🕐</span>
+                    <h1 class="title-text">Ultra Stylish Clock</h1>
+                    <span class="version-badge">v1.0</span>
+                </div>
+                
+                <div class="theme-selector">
+                    <label for="theme-select" class="theme-label">🎨 Theme:</label>
+                    <select id="theme-select" class="theme-dropdown">
+                        <option value="neon">Neon Cyber</option>
+                        <option value="aurora">Aurora Borealis</option>
+                        <option value="cosmic">Cosmic Space</option>
+                        <option value="minimal">Minimal Modern</option>
+                        <option value="retro">Retro Synthwave</option>
+                        <option value="matrix">Matrix Green</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Mode Selector -->
+            <section class="mode-selector">
+                <button id="clock-mode" class="mode-btn active" data-mode="clock">
+                    <span class="mode-icon">🕐</span>
+                    <span class="mode-text">Clock</span>
+                </button>
+                <button id="timer-mode" class="mode-btn" data-mode="timer">
+                    <span class="mode-icon">⏲️</span>
+                    <span class="mode-text">Timer</span>
+                </button>
+                <button id="stopwatch-mode" class="mode-btn" data-mode="stopwatch">
+                    <span class="mode-icon">⏱️</span>
+                    <span class="mode-text">Stopwatch</span>
+                </button>
+            </section>
+
+            <!-- Clock Display Container -->
+            <div class="display-container">
+                <!-- Clock Mode -->
+                <div id="clock-display" class="display-panel active">
+                    <div class="clock-types">
+                        <button id="analog-btn" class="type-btn active" data-type="analog">
+                            <span class="type-icon">⏰</span>
+                            <span>Analog</span>
+                        </button>
+                        <button id="digital-btn" class="type-btn" data-type="digital">
+                            <span class="type-icon">🔢</span>
+                            <span>Digital</span>
+                        </button>
+                    </div>
+
+                    <!-- Analog Clock -->
+                    <div id="analog-clock" class="analog-clock active">
+                        <canvas id="clock-canvas" width="400" height="400"></canvas>
+                        <div class="clock-center"></div>
+                    </div>
+
+                    <!-- Digital Clock -->
+                    <div id="digital-clock" class="digital-clock">
+                        <div class="time-display">
+                            <div id="digital-time" class="digital-time">00:00:00</div>
+                            <div id="digital-date" class="digital-date">January 1, 2024</div>
+                            <div id="digital-day" class="digital-day">Monday</div>
+                        </div>
+                        <div class="timezone-info">
+                            <span id="timezone" class="timezone">JST</span>
+                            <span id="ampm" class="ampm">AM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timer Mode -->
+                <div id="timer-display" class="display-panel">
+                    <div class="timer-container">
+                        <div class="timer-input-section">
+                            <div class="time-inputs">
+                                <div class="input-group">
+                                    <label>Hours</label>
+                                    <input type="number" id="timer-hours" class="time-input" min="0" max="23" value="0">
+                                </div>
+                                <div class="input-group">
+                                    <label>Minutes</label>
+                                    <input type="number" id="timer-minutes" class="time-input" min="0" max="59" value="5">
+                                </div>
+                                <div class="input-group">
+                                    <label>Seconds</label>
+                                    <input type="number" id="timer-seconds" class="time-input" min="0" max="59" value="0">
+                                </div>
+                            </div>
+                            <div class="timer-presets">
+                                <button class="preset-btn" data-time="300">5 min</button>
+                                <button class="preset-btn" data-time="600">10 min</button>
+                                <button class="preset-btn" data-time="900">15 min</button>
+                                <button class="preset-btn" data-time="1800">30 min</button>
+                                <button class="preset-btn" data-time="3600">1 hour</button>
+                            </div>
+                        </div>
+                        
+                        <div class="timer-display-section">
+                            <canvas id="timer-canvas" width="300" height="300"></canvas>
+                            <div id="timer-time" class="timer-time">05:00</div>
+                            <div id="timer-progress" class="timer-progress">Ready to start</div>
+                        </div>
+                        
+                        <div class="timer-controls">
+                            <button id="timer-start" class="control-btn primary">
+                                <span class="btn-icon">▶️</span>
+                                Start
+                            </button>
+                            <button id="timer-pause" class="control-btn secondary" disabled>
+                                <span class="btn-icon">⏸️</span>
+                                Pause
+                            </button>
+                            <button id="timer-reset" class="control-btn tertiary">
+                                <span class="btn-icon">🔄</span>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stopwatch Mode -->
+                <div id="stopwatch-display" class="display-panel">
+                    <div class="stopwatch-container">
+                        <div class="stopwatch-display-section">
+                            <canvas id="stopwatch-canvas" width="300" height="300"></canvas>
+                            <div id="stopwatch-time" class="stopwatch-time">00:00:00</div>
+                            <div id="stopwatch-milliseconds" class="stopwatch-milliseconds">.000</div>
+                        </div>
+                        
+                        <div class="stopwatch-controls">
+                            <button id="stopwatch-start" class="control-btn primary">
+                                <span class="btn-icon">▶️</span>
+                                Start
+                            </button>
+                            <button id="stopwatch-pause" class="control-btn secondary" disabled>
+                                <span class="btn-icon">⏸️</span>
+                                Pause
+                            </button>
+                            <button id="stopwatch-lap" class="control-btn tertiary" disabled>
+                                <span class="btn-icon">🏃</span>
+                                Lap
+                            </button>
+                            <button id="stopwatch-reset" class="control-btn tertiary">
+                                <span class="btn-icon">🔄</span>
+                                Reset
+                            </button>
+                        </div>
+                        
+                        <div class="lap-times">
+                            <h3 class="lap-title">Lap Times</h3>
+                            <div id="lap-list" class="lap-list">
+                                <div class="no-laps">No lap times recorded</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Panel -->
+            <section class="settings-panel">
+                <h3 class="settings-title">⚙️ Display Settings</h3>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label for="show-seconds">Show Seconds</label>
+                        <input type="checkbox" id="show-seconds" class="setting-checkbox" checked>
+                    </div>
+                    <div class="setting-item">
+                        <label for="24-hour">24 Hour Format</label>
+                        <input type="checkbox" id="24-hour" class="setting-checkbox">
+                    </div>
+                    <div class="setting-item">
+                        <label for="show-date">Show Date</label>
+                        <input type="checkbox" id="show-date" class="setting-checkbox" checked>
+                    </div>
+                    <div class="setting-item">
+                        <label for="animations">Animations</label>
+                        <input type="checkbox" id="animations" class="setting-checkbox" checked>
+                    </div>
+                    <div class="setting-item">
+                        <label for="sound-effects">Sound Effects</label>
+                        <input type="checkbox" id="sound-effects" class="setting-checkbox" checked>
+                    </div>
+                    <div class="setting-item">
+                        <label for="fullscreen-mode">Fullscreen Mode</label>
+                        <button id="fullscreen-toggle" class="fullscreen-btn">🔍 Toggle</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <p class="footer-text">🕐 Ultra Stylish Clock System - Experience Time in Style</p>
+                <div class="footer-stats">
+                    <span id="uptime" class="stat">Uptime: 0s</span>
+                    <span class="separator">|</span>
+                    <span id="theme-info" class="stat">Theme: Neon Cyber</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Audio Elements for Sound Effects -->
+    <audio id="tick-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmUeBjiI0fPTgjEGJLGXKd1Mgt7fy7HY7bGSyLnWJhpKrDCBt48aCZhfwY8CaKJi+rg8ABcTU3Pj8P8CcBD6AbY8A28TfNpFh48AaKZ5E2pj0cPPt9bOF5sXeNlKfBJe==" type="audio/wav">
+    </audio>
+    <audio id="timer-complete" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmUeBjiI0fPTgjEGJLGXKd1Mgt7fy7HY7bGSyLnWJhpKrDCBt48aCZhfwY8CaKJi+rg8ABcTU3Pj8P8CcBD6AbY8A28TfNpFh48AaKZ5E2pj0cPPt9bOF5sXeNlKfBJe=" type="audio/wav">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
